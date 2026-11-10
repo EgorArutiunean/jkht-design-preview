@@ -1,0 +1,88 @@
+.lpc-gallery-6 {
+    width: 100%;
+    position: relative;
+}
+
+.lpc-gallery-6__content-in {
+    position: relative;
+}
+
+.lpc-gallery-6__photo {display: block;}
+
+.lpc-gallery-6[data-media-source="mobile"]._reverse .lpc-gallery-6__row {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: reverse;
+    -ms-flex-direction: column-reverse;
+    flex-direction: column-reverse;
+}
+
+.lpc-gallery-6[data-media-source="mobile"] .lpc-gallery-6__row {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+}
+
+.lpc-gallery-6[data-media-source="mobile"] .lpc-gallery-6__content-in {
+    padding: 48px 16px;
+}
+
+.lpc-gallery-6[data-media-source="mobile"] .lpc-gallery-6__text {
+    margin-top: 8px;
+}
+
+.lpc-gallery-6[data-media-source="tablet"]._reverse .lpc-gallery-6__row {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: reverse;
+    -ms-flex-direction: row-reverse;
+    flex-direction: row-reverse;
+}
+
+.lpc-gallery-6[data-media-source="tablet"]._reverse .lpc-gallery-6__content-in {
+    margin-right: 0;
+    margin-left: -100%;
+}
+
+.lpc-gallery-6[data-media-source="tablet"] .lpc-gallery-6__content {
+    padding-top: 56px;
+    padding-bottom: 56px;
+}
+
+.lpc-gallery-6[data-media-source="tablet"] .lpc-gallery-6__content-in {
+    padding: 32px;
+    margin-right: -100%;
+}
+
+.lpc-gallery-6[data-media-source="tablet"] .lpc-gallery-6__text {
+    margin-top: 16px;
+}
+
+.lpc-gallery-6[data-media-source="desktop"]._reverse .lpc-gallery-6__row {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: reverse;
+    -ms-flex-direction: row-reverse;
+    flex-direction: row-reverse;
+}
+
+.lpc-gallery-6[data-media-source="desktop"]._reverse .lpc-gallery-6__content-in {
+    margin-right: 0;
+    margin-left: -100%;
+}
+
+.lpc-gallery-6[data-media-source="desktop"] .lpc-gallery-6__photo {
+    width: 100%;
+}
+
+.lpc-gallery-6[data-media-source="desktop"] .lpc-gallery-6__content {
+    padding-top: 80px;
+    padding-bottom: 80px;
+}
+
+.lpc-gallery-6[data-media-source="desktop"] .lpc-gallery-6__content-in {
+    padding: 32px;
+    margin-right: -100%;
+}
+
+.lpc-gallery-6[data-media-source="desktop"] .lpc-gallery-6__text {
+    margin-top: 16px;
+}

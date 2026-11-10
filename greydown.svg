@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="92" height="62" viewBox="0 0 92 62">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #333;
+        fill-rule: evenodd;
+      }
+    </style>
+  </defs>
+  <path id="greydown.svg" class="cls-1" d="M1780,661h92l-44,62h-1Z" transform="translate(-1780 -661)"/>
+</svg>
