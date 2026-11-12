@@ -144,14 +144,6 @@ body.jkht-preview {
   display: block !important;
   background: var(--jkht-surface) !important;
 }
-.jkht-preview #ip9xiczj9_0 .hor-menu__sub_list,
-.jkht-preview #ip9xiczj9_0 .hor-menu__more_list { background: white !important; }
-.jkht-preview #ip9xiczj9_0 .hor-menu__item:focus-within > .hor-menu__sub_list {
-  display: block;
-  visibility: visible;
-  opacity: 1;
-  z-index: 10;
-}
 .jkht-preview #ip9xiczj9_0 .is-current > a,
 .jkht-preview #ip9xiczj9_0 a:hover { color: var(--jkht-forest) !important; }
 
@@ -1157,6 +1149,54 @@ body.jkht-preview {
 @media (min-width: 992px) {
   .jkht-preview #ip9xiczj9_0 #ij91th7l2_0 { flex: 0 0 auto; width: auto !important; }
   .jkht-preview #ip9xiczj9_0 #iy82ssr38_0 { flex: 1 1 auto; width: 0 !important; min-width: 0; }
+  .jkht-preview #ip9xiczj9_0 .hor-menu__list {
+    height: auto;
+    width: 100%;
+    overflow: visible;
+    gap: 0 4px;
+  }
+  .jkht-preview #ip9xiczj9_0 .hor-menu__more_list { display: none; }
+  .jkht-preview #ip9xiczj9_0 .hor-menu__list > .hor-menu__item {
+    position: relative;
+    padding: 0;
+    border: 0;
+  }
+  .jkht-preview #ip9xiczj9_0 .hor-menu__link {
+    box-sizing: border-box;
+    min-height: 36px;
+    padding: 6px 8px;
+    white-space: nowrap;
+  }
+  .jkht-preview #ip9xiczj9_0 .hor-menu__icon {
+    display: block;
+    width: 6px;
+    height: 6px;
+    margin: -3px 1px 0 8px;
+    border: solid currentColor;
+    border-width: 0 1px 1px 0;
+    background: transparent;
+    transform: rotate(45deg);
+  }
+  .jkht-preview #ip9xiczj9_0 .hor-menu__sub_list {
+    top: 100%;
+    left: 0;
+    width: max-content;
+    max-width: 240px;
+    margin: 0;
+    border: 1px solid var(--jkht-border);
+    border-radius: 6px;
+    background: var(--jkht-paper) !important;
+    box-shadow: 0 8px 24px #20362e1a;
+  }
+  .jkht-preview #ip9xiczj9_0 .hor-menu__item:is(:hover, :focus-within) > .hor-menu__sub_list {
+    display: block;
+    visibility: visible;
+    opacity: 1;
+    z-index: 10;
+  }
+  .jkht-preview #ip9xiczj9_0 .hor-menu__sub_link {
+    font: 650 13px/1.4 var(--jkht-body);
+  }
   .jkht-preview #ip9xiczj9_0:has(#ixla6u05q_0 > a[href="onlajn-oplata.html"]) #id582tumk_0 > li:has(> a[href="onlajn-oplata.html"]) {
     display: none !important;
   }
