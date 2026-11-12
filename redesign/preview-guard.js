@@ -1,3 +1,12 @@
+function validatePasswordConfirmation(form) {
+  if (form.id !== 'form_g-user-register') return;
+  const password = form.elements.namedItem('pwd');
+  const confirmation = form.elements.namedItem('pwd2');
+  if (!password || !confirmation) return;
+  const mismatch = confirmation.value !== '' && confirmation.value !== password.value;
+  confirmation.setCustomValidity(mismatch ? 'Пароли не совпадают.' : '');
+}
+
 // Keep the original controls in the preview without starting real transactions.
 function stopPreviewSubmit(event) {
   event.preventDefault();
@@ -5,6 +14,7 @@ function stopPreviewSubmit(event) {
   const form = event.target.closest('form');
   if (!form) return;
   form.classList.add('preview-validated');
+  validatePasswordConfirmation(form);
   if (!form.reportValidity()) return;
   let notice = form.querySelector('.jkht-preview-notice');
   if (!notice) {
@@ -21,7 +31,12 @@ document.addEventListener('invalid', (event) => {
   event.target.form?.classList.add('preview-validated');
 }, true);
 document.addEventListener('input', (event) => {
-  event.target.form?.querySelector('.jkht-preview-notice[role="status"]')?.remove();
+  const form = event.target.form;
+  if (!form) return;
+  if (event.target.name === 'pwd' || event.target.name === 'pwd2') {
+    validatePasswordConfirmation(form);
+  }
+  form.querySelector('.jkht-preview-notice[role="status"]')?.remove();
 });
 document.addEventListener('click', (event) => {
   const control = event.target.closest('button, input, #zakazForm');
