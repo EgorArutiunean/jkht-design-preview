@@ -4,6 +4,8 @@ function stopPreviewSubmit(event) {
   event.stopImmediatePropagation();
   const form = event.target.closest('form');
   if (!form) return;
+  form.classList.add('preview-validated');
+  if (!form.reportValidity()) return;
   let notice = form.querySelector('.jkht-preview-notice');
   if (!notice) {
     notice = document.createElement('p');
@@ -11,10 +13,16 @@ function stopPreviewSubmit(event) {
     notice.setAttribute('role', 'status');
     form.append(notice);
   }
-  notice.textContent = 'Локальный макет. Данные не отправлены.';
+  notice.textContent = 'Тестовая версия. Данные не отправлены.';
 }
 
 document.addEventListener('submit', stopPreviewSubmit, true);
+document.addEventListener('invalid', (event) => {
+  event.target.form?.classList.add('preview-validated');
+}, true);
+document.addEventListener('input', (event) => {
+  event.target.form?.querySelector('.jkht-preview-notice[role="status"]')?.remove();
+});
 document.addEventListener('click', (event) => {
   const control = event.target.closest('button, input, #zakazForm');
   if (control?.closest('form') && (control.type === 'submit' || control.id === 'zakazForm')) {
@@ -85,6 +93,10 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!open || !close || !content) return;
 
   open.setAttribute('aria-controls', content.id);
+  content.setAttribute('role', 'dialog');
+  content.setAttribute('aria-modal', 'true');
+  content.setAttribute('aria-label', 'Меню сайта');
+  content.inert = true;
   for (const [button, label] of [[open, 'Открыть меню'], [close, 'Закрыть меню']]) {
     button.setAttribute('role', 'button');
     button.setAttribute('aria-label', label);
@@ -100,6 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function showMenu(visible) {
     panel.classList.toggle('jkht-menu-open', visible);
     open.setAttribute('aria-expanded', String(visible));
+    content.inert = !visible;
     (visible ? close : open).focus();
   }
 
@@ -112,6 +125,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }, true);
   document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && panel.classList.contains('jkht-menu-open')) showMenu(false);
+    if (!panel.classList.contains('jkht-menu-open')) return;
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      showMenu(false);
+    }
+    if (event.key !== 'Tab') return;
+    const controls = [...content.querySelectorAll('a[href], button, [tabindex="0"]')]
+      .filter(control => control.getClientRects().length && getComputedStyle(control).visibility === 'visible');
+    const first = controls[0];
+    const last = controls[controls.length - 1];
+    const active = document.activeElement;
+    if (!content.contains(active) || active === (event.shiftKey ? first : last)) {
+      event.preventDefault();
+      (event.shiftKey ? last : first)?.focus();
+    }
   });
 });
