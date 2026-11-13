@@ -72,6 +72,21 @@ function layOutMapPins(canvas) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  for (const submenu of document.querySelectorAll('.hor-menu__list .hor-menu__sub_list')) {
+    const item = submenu.parentElement;
+    const trigger = item.querySelector(':scope > a');
+    item.addEventListener('keydown', (event) => {
+      if (event.key !== 'Escape' || !submenu.getClientRects().length) return;
+      event.preventDefault();
+      item.classList.add('submenu-dismissed');
+      trigger.focus();
+    });
+    item.addEventListener('focusout', (event) => {
+      if (!item.contains(event.relatedTarget)) item.classList.remove('submenu-dismissed');
+    });
+    item.addEventListener('pointerleave', () => item.classList.remove('submenu-dismissed'));
+  }
+
   const map = document.querySelector('.object-map-canvas');
   if (map) {
     layOutMapPins(map);
