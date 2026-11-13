@@ -435,16 +435,20 @@ body.jkht-preview {
 }
 .jkht-preview #igvnd4cm6_0 #izdqo8p66_0 > a:has(> img) { display: inline-flex; }
 .jkht-preview #igvnd4cm6_0 #izdqo8p66_0 > a > img { height: 16px !important; width: auto !important; }
-.jkht-preview #i193ym3bt_0:has(> .preview-footer-instagram) { position: relative; }
-.jkht-preview #i193ym3bt_0:has(> .preview-footer-instagram) #igwb8e6xo_0 {
+.jkht-preview #i193ym3bt_0:has(> .preview-footer-social) { position: relative; }
+.jkht-preview #i193ym3bt_0:has(> .preview-footer-social) #igwb8e6xo_0 {
   box-sizing: border-box;
-  padding-inline-end: 56px !important;
+  padding-inline-end: 108px !important;
   min-height: 58px;
 }
-.jkht-preview #igvnd4cm6_0 .preview-footer-instagram {
+.jkht-preview #igvnd4cm6_0 .preview-footer-social {
   position: absolute;
   inset-inline-end: var(--jkht-gutter);
   inset-block-end: clamp(20px, 2.2vw, 30px);
+  display: flex;
+  gap: 8px;
+}
+.jkht-preview #igvnd4cm6_0 .preview-footer-social a {
   display: grid;
   place-items: center;
   box-sizing: border-box;
@@ -455,7 +459,7 @@ body.jkht-preview {
   color: var(--jkht-forest) !important;
   background: var(--jkht-paper);
 }
-.jkht-preview #igvnd4cm6_0 .preview-footer-instagram:hover { background: #e0e8db; }
+.jkht-preview #igvnd4cm6_0 .preview-footer-social a:hover { background: #e0e8db; }
 .preview-instagram-icon {
   position: relative;
   box-sizing: border-box;
@@ -468,6 +472,13 @@ body.jkht-preview {
 .preview-instagram-icon::after { content: ''; position: absolute; border-radius: 50%; }
 .preview-instagram-icon::before { inset: 4px; border: 1.5px solid currentColor; }
 .preview-instagram-icon::after { top: 2px; right: 2px; width: 2px; height: 2px; background: currentColor; }
+.preview-telegram-icon {
+  width: 20px;
+  height: 20px;
+  background: currentColor;
+  clip-path: polygon(0 41%, 100% 4%, 78% 96%, 55% 76%, 40% 90%, 32% 62%, 0 41%,
+    20% 42%, 40% 55%, 49% 75%, 55% 68%, 74% 84%, 90% 17%, 20% 42%);
+}
 
 .home-frame,
 .jkht-home :is(#i1llw7zz3_0, #imagdwau0_0, #partnerblock-container_0, #i1xx9pvkh_0, #in28v8gxt_0, #i9a0nvj23_0) {
