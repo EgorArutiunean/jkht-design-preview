@@ -79,10 +79,10 @@
 .div--u-il68t4uos { width: 23%; position: relative; display: -webkit-box; display: -ms-flexbox; display: flex }
 .div--u-ij91th7l2 { width: 25%; position: relative; display: -webkit-box; display: -ms-flexbox; display: flex;  -webkit-box-align: center; -ms-flex-align: center; align-items: center; justify-content: center; -webkit-box-orient: horizontal; -webkit-box-direction: normal; -ms-flex-direction: row; flex-direction: row; padding-right: 0px; flex-wrap: wrap; margin-right: 30px }
 .div--u-iy82ssr38 { width: 75%; position: relative; display: block; margin-top: 20px; margin-bottom: 20px }
-.text--u-i98z7z2xy { display: -webkit-box; display: -ms-flexbox; display: flex; font-size: 14px; line-height: normal; vertical-align: top; position: relative; font-family: Oswald, sans-serif; font-weight: 400; color: rgba(var(--color-ir3npcslu), 1); text-align: center; margin-bottom: 6px }
+.text--u-i98z7z2xy { display: -webkit-box; display: -ms-flexbox; display: flex; font-size: 14px; line-height: normal; vertical-align: top; position: relative; font-family: "JKHT Manrope", sans-serif; font-weight: 400; color: rgba(var(--color-ir3npcslu), 1); text-align: center; margin-bottom: 6px }
 .list__item--u-ixla6u05q { padding-top: 5px; padding-right: 0px; padding-bottom: 5px; padding-left: 0px }
 .list--u-iczghjfev { display: inline-block }
-.text--u-inzi57nmh { font-family: Oswald, sans-serif; font-weight: 700; color: rgba(var(--color-ijz8s5kic), 1); font-size: 20px; display: block }
+.text--u-inzi57nmh { font-family: "JKHT Manrope", sans-serif; font-weight: 700; color: rgba(var(--color-ijz8s5kic), 1); font-size: 20px; display: block }
 .link-universal--u-imazjzeyc { display: none; cursor: pointer; text-decoration-line: none }
 .div--u-iugtgtvht { width: 100%; position: relative; display: -webkit-box; display: -ms-flexbox; display: flex; padding-left: 0px; -webkit-box-orient: horizontal; -webkit-box-direction: reverse; -ms-flex-direction: row-reverse; flex-direction: row-reverse;  -webkit-box-align: center; -ms-flex-align: center; align-items: center; justify-content: center; margin-right: 0px }
 .imageFit--u-i3iltc5yn { position: relative; display: inline-block; vertical-align: top; overflow-x: hidden; overflow-y: hidden; width: 100px; height: 100px }
@@ -91,8 +91,8 @@
 .imageFit__zoom--u-ibfsgcopg { display: none; position: absolute; right: 10px; bottom: 10px; width: 20px; height: 20px; background-color: rgba(var(--color-i7ixi6pms), 1) }
 .svg_image--u-invbk6v2n { position: relative; display: -webkit-inline-box; display: -ms-inline-flexbox; display: inline-flex; vertical-align: top; justify-content: center;  -webkit-box-align: center; -ms-flex-align: center; align-items: center; height: 20px; width: 20px; overflow-x: hidden; overflow-y: hidden }
 .svg_image--u-invbk6v2n svg { flex-shrink: 0; width: 100%; height: 100% }
-.heading--u-icpiwcx59 { font-size: 25px; line-height: normal; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; display: -webkit-box; display: -ms-flexbox; display: flex; position: relative; font-family: Oswald, sans-serif; font-weight: 600; color: rgba(var(--color-irmqfbylq), 1); text-transform: uppercase }
-.text--u-iinn5s4ty { display: -webkit-box; display: -ms-flexbox; display: flex; font-size: 13px; line-height: normal; vertical-align: top; position: relative; font-family: Montserrat, sans-serif; color: rgba(var(--color-ibkfvngkr), 0.7); font-weight: 500 }
+.heading--u-icpiwcx59 { font-size: 25px; line-height: normal; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; display: -webkit-box; display: -ms-flexbox; display: flex; position: relative; font-family: "JKHT Manrope", sans-serif; font-weight: 600; color: rgba(var(--color-irmqfbylq), 1); text-transform: uppercase }
+.text--u-iinn5s4ty { display: -webkit-box; display: -ms-flexbox; display: flex; font-size: 13px; line-height: normal; vertical-align: top; position: relative; font-family: "JKHT Manrope", sans-serif; color: rgba(var(--color-ibkfvngkr), 0.7); font-weight: 500 }
 .hor-menu--u-ibf6999wh { display: -webkit-box; display: -ms-flexbox; display: flex; position: relative }
 .hor-menu--u-ibf6999wh .is-removed { display: none }
 .hor-menu--u-ibf6999wh .hor-menu__list { padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; list-style-type: none; display: -webkit-box; display: -ms-flexbox; display: flex; flex-wrap: wrap; flex-direction: inherit; justify-content: inherit; align-content: inherit; -webkit-box-align: start; -ms-flex-align: start; align-items: flex-start; -webkit-box-flex: 1; -ms-flex-positive: 1; flex-grow: 1; flex-shrink: 1; height: 65px; width: 1%; overflow-x: hidden; overflow-y: hidden }
@@ -107,7 +107,7 @@
 .hor-menu--u-ibf6999wh .hor-menu__more_item { display: -webkit-box; display: -ms-flexbox; display: flex }
 .hor-menu--u-ibf6999wh .hor-menu__more_link { display: -webkit-box; display: -ms-flexbox; display: flex; cursor: pointer; text-decoration-line: none; color: rgba(var(--color-i8flfziz6), 1); font-size: 16px;  -webkit-box-align: center; -ms-flex-align: center; align-items: center; padding-top: 4px; padding-right: 10px; padding-bottom: 4px; padding-left: 10px; background-color: rgba(var(--color-if0luk4rs), 1) }
 .hor-menu--u-ibf6999wh .hor-menu__icon { display: none }
-.hor-menu--u-ibf6999wh .hor-menu__link { font-family: Oswald, sans-serif; font-weight: 400; font-size: 15px; color: rgba(var(--color-iycj807u4), 1) }
+.hor-menu--u-ibf6999wh .hor-menu__link { font-family: "JKHT Manrope", sans-serif; font-weight: 400; font-size: 15px; color: rgba(var(--color-iycj807u4), 1) }
 .hor-menu--u-ibf6999wh .hor-menu__item:hover, .hor-menu--u-ibf6999wh .hor-menu__item.is-hover { border-top-color: rgba(var(--color-i7ls2yc77), 0) }
 .hor-menu--u-ibf6999wh.flex-menu .hor-menu__list { flex-wrap: wrap; width: auto; overflow-x: unset; overflow-y: unset }
 .hor-menu--u-ibf6999wh .hor-menu__item > .hor-menu__sub_list { display: none }
@@ -118,7 +118,7 @@
 .hor-menu--u-ibf6999wh .hor-menu__item:hover .hor-menu__link, .hor-menu--u-ibf6999wh .hor-menu__item.is-hover .hor-menu__link { color: rgba(var(--color-iabxb4k2h), 1) }
 .hor-menu--u-ibf6999wh .hor-menu__item:hover .hor-menu__sub_list, .hor-menu--u-ibf6999wh .hor-menu__item.is-hover .hor-menu__sub_list { background-color: rgba(var(--color-iq6zqmcdk), 1) }
 .hor-menu--u-ibf6999wh .hor-menu__more_list > .hor-menu__item > .hor-menu__more_link { background-color: rgba(var(--color-in3oh4w9t), 0); color: rgba(var(--color-iot8j1mhw), 0) }
-.hor-menu--u-ibf6999wh .hor-menu__sub_list > .hor-menu__sub_item > .hor-menu__sub_link { background-color: rgba(var(--color-i8e14ca7t), 0.03); font-family: Oswald, sans-serif; font-weight: 500; color: rgba(var(--color-iern1zqfe), 1) }
+.hor-menu--u-ibf6999wh .hor-menu__sub_list > .hor-menu__sub_item > .hor-menu__sub_link { background-color: rgba(var(--color-i8e14ca7t), 0.03); font-family: "JKHT Manrope", sans-serif; font-weight: 500; color: rgba(var(--color-iern1zqfe), 1) }
 .hor-menu--u-ibf6999wh .hor-menu__sub_list > .hor-menu__sub_item:hover > .hor-menu__sub_link, .hor-menu--u-ibf6999wh .hor-menu__sub_list > .hor-menu__sub_item.is-hover > .hor-menu__sub_link { color: rgba(var(--color-ir6nse1k1), 1) }
 .hor-menu--u-ibf6999wh .hor-menu__item:hover .hor-menu__sub_list > .hor-menu__sub_item:hover, .hor-menu--u-ibf6999wh .hor-menu__item.is-hover .hor-menu__sub_list > .hor-menu__sub_item.is-hover { background-color: rgba(var(--color-i8ztuzpkz), 1) }
 .link-universal--u-i7mod9irj { display: -webkit-box; display: -ms-flexbox; display: flex; cursor: pointer; text-decoration-line: none; margin-left: 0px; margin-right: 20px; width: auto }

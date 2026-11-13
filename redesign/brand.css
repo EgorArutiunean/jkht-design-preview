@@ -453,7 +453,7 @@ body.jkht-preview {
   background:
     linear-gradient(0deg, #15271db8, transparent 58%),
     linear-gradient(95deg, #15271df2, #15271db8 47%, #15271d38 100%),
-    var(--jkht-dark) url("../2.jpg") center / cover no-repeat !important;
+    var(--jkht-dark) url("../2.jpg?preview=2") center / cover no-repeat !important;
   color: white;
 }
 .jkht-home #i1llw7zz3_0 {
@@ -1132,7 +1132,7 @@ body.jkht-preview {
     background-image:
       linear-gradient(0deg, #15271dd9, transparent 76%),
       linear-gradient(90deg, #15271df0, #15271d91),
-      url("../2.jpg") !important;
+      url("../2.jpg?preview=2") !important;
   }
   .jkht-home #i7jx4aait_0 { font-size: clamp(29px, 7.8vw, 49px) !important; }
   .hero-fact { border-left: 0; border-top: 1px solid #ffffff56; padding: 14px 0 0; }

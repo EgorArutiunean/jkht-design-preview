@@ -44,11 +44,11 @@
 .ver-menu--u-i5ik3d6t4 .ver-menu__sub_item { vertical-align: top }
 .ver-menu--u-i5ik3d6t4 .ver-menu__sub_link { cursor: pointer; text-decoration-line: none; padding-top: 5px; padding-right: 10px; padding-bottom: 5px; padding-left: 10px; color: rgba(var(--color-iwlksavif), 1) }
 .ver-menu--u-i5ik3d6t4 .ver-menu__item { padding-top: 10px; padding-bottom: 10px; padding-left: 10px; padding-right: 10px }
-.ver-menu--u-i5ik3d6t4 .ver-menu__link { font-family: Oswald, sans-serif; color: rgba(var(--color-ix3u97mp2), 1) }
+.ver-menu--u-i5ik3d6t4 .ver-menu__link { font-family: "JKHT Manrope", sans-serif; color: rgba(var(--color-ix3u97mp2), 1) }
 .ver-menu--u-i5ik3d6t4 .ver-menu__sub_list > .ver-menu__sub_item { padding-top: 5px; padding-bottom: 5px }
 .ver-menu--u-i5ik3d6t4 .ver-menu__sub_list > .ver-menu__sub_item:hover, .ver-menu--u-i5ik3d6t4 .ver-menu__sub_list > .ver-menu__sub_item.is-hover { background-color: rgba(var(--color-il8f7lm0n), 1) }
 .ver-menu--u-i5ik3d6t4 .ver-menu__item:hover .ver-menu__link, .ver-menu--u-i5ik3d6t4 .ver-menu__item.is-hover .ver-menu__link { color: rgba(var(--color-iyp1rrkod), 1) }
-.ver-menu--u-i5ik3d6t4 .ver-menu__sub_list > .ver-menu__sub_item > .ver-menu__sub_link { font-family: Oswald, sans-serif }
+.ver-menu--u-i5ik3d6t4 .ver-menu__sub_list > .ver-menu__sub_item > .ver-menu__sub_link { font-family: "JKHT Manrope", sans-serif }
 .ver-menu--u-i5ik3d6t4 .ver-menu__sub_list > .ver-menu__sub_item:hover > .ver-menu__sub_link, .ver-menu--u-i5ik3d6t4 .ver-menu__sub_list > .ver-menu__sub_item.is-hover > .ver-menu__sub_link { color: rgba(var(--color-iwzjis2cr), 1) }
 .ver-menu--u-i5ik3d6t4 .ver-menu__sub_list > .ver-menu__sub_item > .ver-menu__sub_link > .ver-menu__sub_icon { background-image: url("greydown.svg"); background-repeat: no-repeat; background-position: center top 0; background-size: contain; background-attachment: scroll; background-color: rgba(var(--color-io9wvl9me), 0) }
 
