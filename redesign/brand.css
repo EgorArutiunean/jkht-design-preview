@@ -435,6 +435,39 @@ body.jkht-preview {
 }
 .jkht-preview #igvnd4cm6_0 #izdqo8p66_0 > a:has(> img) { display: inline-flex; }
 .jkht-preview #igvnd4cm6_0 #izdqo8p66_0 > a > img { height: 16px !important; width: auto !important; }
+.jkht-preview #i193ym3bt_0:has(> .preview-footer-instagram) { position: relative; }
+.jkht-preview #i193ym3bt_0:has(> .preview-footer-instagram) #igwb8e6xo_0 {
+  box-sizing: border-box;
+  padding-inline-end: 56px !important;
+  min-height: 58px;
+}
+.jkht-preview #igvnd4cm6_0 .preview-footer-instagram {
+  position: absolute;
+  inset-inline-end: var(--jkht-gutter);
+  inset-block-end: clamp(20px, 2.2vw, 30px);
+  display: grid;
+  place-items: center;
+  box-sizing: border-box;
+  width: 44px;
+  height: 44px;
+  border: 1px solid #aab7ac;
+  border-radius: 8px;
+  color: var(--jkht-forest) !important;
+  background: var(--jkht-paper);
+}
+.jkht-preview #igvnd4cm6_0 .preview-footer-instagram:hover { background: #e0e8db; }
+.preview-instagram-icon {
+  position: relative;
+  box-sizing: border-box;
+  width: 19px;
+  height: 19px;
+  border: 1.6px solid currentColor;
+  border-radius: 5px;
+}
+.preview-instagram-icon::before,
+.preview-instagram-icon::after { content: ''; position: absolute; border-radius: 50%; }
+.preview-instagram-icon::before { inset: 4px; border: 1.5px solid currentColor; }
+.preview-instagram-icon::after { top: 2px; right: 2px; width: 2px; height: 2px; background: currentColor; }
 
 .home-frame,
 .jkht-home :is(#i1llw7zz3_0, #imagdwau0_0, #partnerblock-container_0, #i1xx9pvkh_0, #in28v8gxt_0, #i9a0nvj23_0) {
@@ -1343,13 +1376,6 @@ body.jkht-preview {
     justify-content: flex-start !important;
   }
   .jkht-preview #igvnd4cm6_0 #ieplcvf8x_0 { display: none; }
-  .jkht-preview #igvnd4cm6_0 #ilvlzw3ij_0 { margin: 0 !important; width: auto !important; }
-  .jkht-preview #igvnd4cm6_0 #itszbdduk_0 { width: 44px; height: 44px; margin: 0 !important; }
-  .jkht-preview #igvnd4cm6_0 :is(#ikk80nq4o_0, #igubzit8w_0) {
-    width: 44px !important;
-    height: 44px !important;
-    margin: 0 !important;
-  }
   .jkht-preview #igvnd4cm6_0 #igwb8e6xo_0 { gap: 6px 14px; }
   .jkht-preview #igvnd4cm6_0 #izdqo8p66_0 { align-items: flex-start; }
   .jkht-preview #igvnd4cm6_0 #izdqo8p66_0 .footer__politika { margin: 0 !important; }
