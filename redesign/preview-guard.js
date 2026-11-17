@@ -15,6 +15,7 @@ function stopPreviewSubmit(event) {
   if (!form) return;
   form.classList.add('preview-validated');
   validatePasswordConfirmation(form);
+  if (form.hasAttribute('data-question-form')) updateQuestionValidity(form);
   if (!form.reportValidity()) return;
   let notice = form.querySelector('.jkht-preview-notice');
   if (!notice) {
@@ -70,6 +71,39 @@ function layOutMapPins(canvas) {
     pin.style.setProperty('--pin-angle', `${Math.atan2(-dy, -dx)}rad`);
   }
 }
+
+function updateQuestionValidity(form) {
+  const name = form.querySelector('input[type="text"]');
+  const phone = form.querySelector('input[type="tel"]');
+  const [start, end] = form.querySelectorAll('input[type="date"]');
+  // Match validatePhone on the existing site, including +7, 8 and a bare 10-digit number.
+  const phonePattern = /^(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/;
+  name.setCustomValidity(name.value && !name.value.trim() ? 'Укажите имя.' : '');
+  phone.setCustomValidity(phone.value && !phonePattern.test(phone.value.trim())
+    ? 'Проверьте номер телефона. Пример: +7 900 123-45-67.' : '');
+  end.setCustomValidity(start.value && end.value && end.value < start.value
+    ? 'Дата окончания должна быть не раньше даты начала.' : '');
+}
+
+document.addEventListener('input', (event) => {
+  const form = event.target.form;
+  if (form?.hasAttribute('data-question-form')) updateQuestionValidity(form);
+});
+
+// The original home page sends via a button click, before native submit validation.
+function checkQuestionSubmit(event) {
+  const control = event.type === 'click' && event.target.closest('button[type="submit"], button:not([type]), input[type="submit"]');
+  const form = event.type === 'submit' ? event.target : control?.form;
+  if (!form?.hasAttribute('data-question-form')) return;
+  form.classList.add('preview-validated');
+  updateQuestionValidity(form);
+  if (form.reportValidity()) return;
+  event.preventDefault();
+  event.stopImmediatePropagation();
+}
+
+document.addEventListener('click', checkQuestionSubmit, true);
+document.addEventListener('submit', checkQuestionSubmit, true);
 
 document.addEventListener('DOMContentLoaded', () => {
   for (const submenu of document.querySelectorAll('.hor-menu__list .hor-menu__sub_list')) {
