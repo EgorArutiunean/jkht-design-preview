@@ -7,6 +7,42 @@ function validatePasswordConfirmation(form) {
   confirmation.setCustomValidity(mismatch ? 'Пароли не совпадают.' : '');
 }
 
+function consultationValidation(control) {
+  const rules = {
+    if6htdyfj_0: ['Укажите имя (не более 100 символов).', field => field.value.trim().length > 0 && field.value.length <= 100],
+    ih6pdhj9c_0: ['Введите корректный адрес электронной почты.', field => {
+      const value = field.value.trim();
+      return value !== '' && field.validity.valid && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+    }],
+    izyteexfm_0: ['Введите телефон в формате российского номера, например +7 (925) 309-82-27.', field => /^(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/.test(field.value.trim())],
+    iiur1e8r5_0: ['Необходимо согласиться на обработку персональных данных.', field => field.checked],
+  };
+  const rule = rules[control.id];
+  return rule ? { message: rule[0], valid: rule[1](control) } : { valid: true };
+}
+
+function validateConsultation(form) {
+  if (form.id !== 'i63wo6lr0_0') return true;
+  const controls = [...form.querySelectorAll('#if6htdyfj_0, #ih6pdhj9c_0, #izyteexfm_0, #iiur1e8r5_0')];
+  let firstInvalid = null;
+  for (const control of controls) {
+    const { message, valid } = consultationValidation(control);
+    const error = control.closest('.mosaic-form__field').querySelector('.mosaic-form__error');
+    error.classList.toggle('is-removed', valid);
+    if (!valid) {
+      error.querySelector('.text-block-wrap-div').textContent = message;
+      control.setAttribute('aria-describedby', error.id);
+      control.setAttribute('aria-invalid', 'true');
+      firstInvalid ||= control;
+    } else {
+      control.removeAttribute('aria-describedby');
+      control.setAttribute('aria-invalid', 'false');
+    }
+  }
+  firstInvalid?.focus();
+  return !firstInvalid;
+}
+
 // Keep the original controls in the preview without starting real transactions.
 function stopPreviewSubmit(event) {
   event.preventDefault();
@@ -14,6 +50,7 @@ function stopPreviewSubmit(event) {
   const form = event.target.closest('form');
   if (!form) return;
   form.classList.add('preview-validated');
+  if (!validateConsultation(form)) return;
   validatePasswordConfirmation(form);
   if (form.hasAttribute('data-question-form')) updateQuestionValidity(form);
   if (!form.reportValidity()) return;
@@ -31,14 +68,32 @@ document.addEventListener('submit', stopPreviewSubmit, true);
 document.addEventListener('invalid', (event) => {
   event.target.form?.classList.add('preview-validated');
 }, true);
+function refreshConsultationError(control) {
+  if (!control.form || control.form.id !== 'i63wo6lr0_0') return;
+  const error = control.closest('.mosaic-form__field')?.querySelector('.mosaic-form__error');
+  if (!error) return;
+  const { message, valid } = consultationValidation(control);
+  error.classList.toggle('is-removed', valid);
+  if (valid) {
+    control.removeAttribute('aria-describedby');
+    control.setAttribute('aria-invalid', 'false');
+  } else {
+    error.querySelector('.text-block-wrap-div').textContent = message;
+    control.setAttribute('aria-describedby', error.id);
+    control.setAttribute('aria-invalid', 'true');
+  }
+}
+
 document.addEventListener('input', (event) => {
   const form = event.target.form;
   if (!form) return;
   if (event.target.name === 'pwd' || event.target.name === 'pwd2') {
     validatePasswordConfirmation(form);
   }
+  refreshConsultationError(event.target);
   form.querySelector('.jkht-preview-notice[role="status"]')?.remove();
 });
+document.addEventListener('change', (event) => refreshConsultationError(event.target));
 document.addEventListener('click', (event) => {
   const control = event.target.closest('button, input, #zakazForm');
   if (control?.closest('form') && (control.type === 'submit' || control.id === 'zakazForm')) {
