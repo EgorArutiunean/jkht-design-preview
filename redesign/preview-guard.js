@@ -1,60 +1,107 @@
-function validatePasswordConfirmation(form) {
-  if (form.id !== 'form_g-user-register') return;
-  const password = form.elements.namedItem('pwd');
-  const confirmation = form.elements.namedItem('pwd2');
-  if (!password || !confirmation) return;
-  const mismatch = confirmation.value !== '' && confirmation.value !== password.value;
-  confirmation.setCustomValidity(mismatch ? 'Пароли не совпадают.' : '');
-}
+const phonePattern = /^(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/;
+const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const previewErrors = new WeakMap();
 
-function consultationValidation(control) {
-  const rules = {
-    if6htdyfj_0: ['Укажите имя (не более 100 символов).', field => field.value.trim().length > 0 && field.value.length <= 100],
-    ih6pdhj9c_0: ['Введите корректный адрес электронной почты.', field => {
-      const value = field.value.trim();
-      return value !== '' && field.validity.valid && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-    }],
-    izyteexfm_0: ['Введите телефон в формате российского номера, например +7 (925) 309-82-27.', field => /^(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/.test(field.value.trim())],
-    iiur1e8r5_0: ['Необходимо согласиться на обработку персональных данных.', field => field.checked],
-  };
-  const rule = rules[control.id];
-  return rule ? { message: rule[0], valid: rule[1](control) } : { valid: true };
-}
-
-function validateConsultation(form) {
-  if (form.id !== 'i63wo6lr0_0') return true;
-  const controls = [...form.querySelectorAll('#if6htdyfj_0, #ih6pdhj9c_0, #izyteexfm_0, #iiur1e8r5_0')];
-  let firstInvalid = null;
-  for (const control of controls) {
-    const { message, valid } = consultationValidation(control);
-    const error = control.closest('.mosaic-form__field').querySelector('.mosaic-form__error');
-    error.classList.toggle('is-removed', valid);
-    if (!valid) {
-      error.querySelector('.text-block-wrap-div').textContent = message;
-      control.setAttribute('aria-describedby', error.id);
-      control.setAttribute('aria-invalid', 'true');
-      firstInvalid ||= control;
-    } else {
-      control.removeAttribute('aria-describedby');
-      control.setAttribute('aria-invalid', 'false');
+function paymentFieldError(control, value) {
+  if (control.id === 'client_orderid') {
+    if (control.maxLength === 11 && !/^\d{8}(?:\d{3})?$/.test(value)) {
+      return 'Введите 8 или 11 цифр лицевого счёта.';
+    }
+    if (control.maxLength === 8 && value.length < 7) {
+      return 'Введите номер лицевого счёта (от 7 до 8 символов).';
     }
   }
-  firstInvalid?.focus();
-  return !firstInvalid;
+  if (control.id === 'client_fio' && value.length < 7) return 'Укажите ФИО как в договоре.';
+  if (control.id === 'client_car_number' && value.length < 5) return 'Укажите номер автомобиля.';
+  return '';
 }
 
-// Keep the original controls in the preview without starting real transactions.
+function fieldError(control) {
+  const value = control.value.trim();
+  const { validity, type, form } = control;
+  if (validity.badInput) return 'Проверьте формат введённых данных.';
+  if (validity.valueMissing || (control.required && type !== 'password' && !value)) {
+    if (control.id === 'iiur1e8r5_0') return 'Необходимо согласиться на обработку персональных данных.';
+    if (type === 'checkbox') return 'Отметьте согласие, чтобы продолжить.';
+    return 'Заполните это поле.';
+  }
+  if (type === 'email' && value && (validity.typeMismatch || !emailPattern.test(value))) {
+    return 'Введите корректный адрес электронной почты.';
+  }
+  if (type === 'tel' && value && !phonePattern.test(value)) {
+    return 'Введите телефон в формате российского номера, например +7 (925) 309-82-27.';
+  }
+  if (control.maxLength >= 0 && control.value.length > control.maxLength) {
+    return `Введите не более ${control.maxLength} символов.`;
+  }
+  if (validity.rangeUnderflow) return `Минимальная сумма: ${control.min} ₽.`;
+  if (form.id === 'form_g-user-register' && control.name === 'pwd2' &&
+      control.value !== form.elements.namedItem('pwd').value) {
+    return 'Пароли не совпадают.';
+  }
+  if (control.id === 'iuk46c2zz_0') {
+    const start = form.querySelector('#itahrl7o2_0');
+    if (control.valueAsNumber < start.valueAsNumber) return 'Дата окончания должна быть не раньше даты начала.';
+  }
+  if (form.id === 'TinkoffPayForm' && value) {
+    const message = paymentFieldError(control, value);
+    if (message) return message;
+  }
+  return control.validationMessage;
+}
+
+function renderFieldError(control, message) {
+  const error = previewErrors.get(control);
+  if (!error) return;
+
+  const description = (control.getAttribute('aria-describedby') || '').split(/\s+/)
+    .filter(id => id && id !== error.id);
+  if (message) description.push(error.id);
+  if (description.length) control.setAttribute('aria-describedby', description.join(' '));
+  else control.removeAttribute('aria-describedby');
+  control.setAttribute('aria-invalid', String(Boolean(message)));
+  if (message) {
+    if (error.textContent !== message) error.textContent = message;
+    error.hidden = false;
+    error.classList.remove('is-removed');
+  } else {
+    error.hidden = true;
+    error.classList.add('is-removed');
+  }
+}
+
+function validatePreviewForm(form, showErrors, editedControl) {
+  let firstInvalid = null;
+  for (const control of form.elements) {
+    if (!control.willValidate || !previewErrors.has(control)) continue;
+    control.setCustomValidity('');
+    const message = fieldError(control);
+    control.setCustomValidity(message);
+    if (showErrors || control === editedControl || control.getAttribute('aria-invalid') === 'true') {
+      renderFieldError(control, message);
+    }
+    if (message) firstInvalid ||= control;
+  }
+  return firstInvalid;
+}
+
+// Capture legacy button clicks too, before any scripts attached to the controls.
 function stopPreviewSubmit(event) {
+  const submitter = event.type === 'click' && event.target.closest('button, input');
+  const form = event.type === 'submit' ? event.target : submitter?.form;
+  if (!form || (submitter && submitter.type !== 'submit' && submitter.type !== 'image')) return;
+
   event.preventDefault();
   event.stopImmediatePropagation();
-  const form = event.target.closest('form');
-  if (!form) return;
+  if (form.id === 'TinkoffPayForm') return;
   form.classList.add('preview-validated');
-  if (!validateConsultation(form)) return;
-  validatePasswordConfirmation(form);
-  if (form.hasAttribute('data-question-form')) updateQuestionValidity(form);
-  if (!form.reportValidity()) return;
-  let notice = form.querySelector('.jkht-preview-notice');
+  let notice = form.querySelector('.jkht-preview-notice[role="status"]');
+  const invalid = validatePreviewForm(form, true);
+  if (invalid) {
+    if (notice) notice.textContent = '';
+    invalid.focus();
+    return;
+  }
   if (!notice) {
     notice = document.createElement('p');
     notice.className = 'jkht-preview-notice';
@@ -65,41 +112,57 @@ function stopPreviewSubmit(event) {
 }
 
 document.addEventListener('submit', stopPreviewSubmit, true);
-document.addEventListener('invalid', (event) => {
-  event.target.form?.classList.add('preview-validated');
-}, true);
-function refreshConsultationError(control) {
-  if (!control.form || control.form.id !== 'i63wo6lr0_0') return;
-  const error = control.closest('.mosaic-form__field')?.querySelector('.mosaic-form__error');
-  if (!error) return;
-  const { message, valid } = consultationValidation(control);
-  error.classList.toggle('is-removed', valid);
-  if (valid) {
-    control.removeAttribute('aria-describedby');
-    control.setAttribute('aria-invalid', 'false');
-  } else {
-    error.querySelector('.text-block-wrap-div').textContent = message;
-    control.setAttribute('aria-describedby', error.id);
-    control.setAttribute('aria-invalid', 'true');
-  }
+document.addEventListener('click', stopPreviewSubmit, true);
+
+function updatePreviewFields(event) {
+  const control = event.target;
+  const form = control.form;
+  if (!form || !previewErrors.has(control)) return;
+  const notice = form.querySelector('.jkht-preview-notice[role="status"]');
+  if (notice) notice.textContent = '';
+  validatePreviewForm(form, form.classList.contains('preview-validated'), control);
 }
 
-document.addEventListener('input', (event) => {
-  const form = event.target.form;
-  if (!form) return;
-  if (event.target.name === 'pwd' || event.target.name === 'pwd2') {
-    validatePasswordConfirmation(form);
+document.addEventListener('input', updatePreviewFields);
+document.addEventListener('change', updatePreviewFields);
+
+function preparePreviewForms() {
+  for (const form of document.forms) {
+    form.classList.add('jkht-form');
+    form.noValidate = true;
+    for (const control of form.elements) {
+      if (!control.willValidate || !control.matches('input:not([type="submit"], [type="image"]), select, textarea')) continue;
+      if (control.id === 'if6htdyfj_0') control.maxLength = 100;
+      if (control.id === 'iiur1e8r5_0') control.setAttribute('aria-label', 'Согласие на обработку персональных данных');
+      const field = control.closest('.mosaic-form__field');
+      if (field && control.type === 'date') {
+        const group = document.createElement('div');
+        group.className = 'jkht-form-date';
+        const label = document.createElement('label');
+        label.htmlFor = control.id;
+        label.textContent = control.getAttribute('aria-label');
+        control.before(group);
+        group.append(label, control);
+      } else if (field && !control.labels?.length && control.placeholder && !control.hasAttribute('aria-label')) {
+        const label = document.createElement('label');
+        label.htmlFor = control.id;
+        label.className = 'preview-field-label';
+        label.textContent = control.placeholder;
+        control.before(label);
+      }
+      let error = control.type === 'date' ? null : field?.querySelector('.mosaic-form__error');
+      if (!error) {
+        error = document.createElement('p');
+        error.id = `${control.id}-preview-error`;
+        (control.closest('label') || control).after(error);
+      }
+      error.classList.add('jkht-form-error');
+      error.setAttribute('data-nosnippet', '');
+      error.hidden = true;
+      previewErrors.set(control, error);
+    }
   }
-  refreshConsultationError(event.target);
-  form.querySelector('.jkht-preview-notice[role="status"]')?.remove();
-});
-document.addEventListener('change', (event) => refreshConsultationError(event.target));
-document.addEventListener('click', (event) => {
-  const control = event.target.closest('button, input, #zakazForm');
-  if (control?.closest('form') && (control.type === 'submit' || control.id === 'zakazForm')) {
-    stopPreviewSubmit(event);
-  }
-}, true);
+}
 
 function layOutMapPins(canvas) {
   const pins = [...canvas.querySelectorAll('.object-map-pin')];
@@ -127,40 +190,9 @@ function layOutMapPins(canvas) {
   }
 }
 
-function updateQuestionValidity(form) {
-  const name = form.querySelector('input[type="text"]');
-  const phone = form.querySelector('input[type="tel"]');
-  const [start, end] = form.querySelectorAll('input[type="date"]');
-  // Match validatePhone on the existing site, including +7, 8 and a bare 10-digit number.
-  const phonePattern = /^(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/;
-  name.setCustomValidity(name.value && !name.value.trim() ? 'Укажите имя.' : '');
-  phone.setCustomValidity(phone.value && !phonePattern.test(phone.value.trim())
-    ? 'Проверьте номер телефона. Пример: +7 900 123-45-67.' : '');
-  end.setCustomValidity(start.value && end.value && end.value < start.value
-    ? 'Дата окончания должна быть не раньше даты начала.' : '');
-}
-
-document.addEventListener('input', (event) => {
-  const form = event.target.form;
-  if (form?.hasAttribute('data-question-form')) updateQuestionValidity(form);
-});
-
-// The original home page sends via a button click, before native submit validation.
-function checkQuestionSubmit(event) {
-  const control = event.type === 'click' && event.target.closest('button[type="submit"], button:not([type]), input[type="submit"]');
-  const form = event.type === 'submit' ? event.target : control?.form;
-  if (!form?.hasAttribute('data-question-form')) return;
-  form.classList.add('preview-validated');
-  updateQuestionValidity(form);
-  if (form.reportValidity()) return;
-  event.preventDefault();
-  event.stopImmediatePropagation();
-}
-
-document.addEventListener('click', checkQuestionSubmit, true);
-document.addEventListener('submit', checkQuestionSubmit, true);
-
 document.addEventListener('DOMContentLoaded', () => {
+  preparePreviewForms();
+
   for (const submenu of document.querySelectorAll('.hor-menu__list .hor-menu__sub_list')) {
     const item = submenu.parentElement;
     const trigger = item.querySelector(':scope > a');
@@ -197,12 +229,6 @@ document.addEventListener('DOMContentLoaded', () => {
     trigger.addEventListener('click', () => consultation.showModal());
     consultation.querySelector('button.mosaic-popup__close').addEventListener('click', () => consultation.close());
     consultation.addEventListener('close', () => trigger.focus());
-  }
-
-  for (const field of document.querySelectorAll('.mosaic-form :is(input, textarea)[placeholder]')) {
-    if (!field.labels?.length && !field.hasAttribute('aria-label')) {
-      field.setAttribute('aria-label', field.placeholder);
-    }
   }
 
   const panel = document.querySelector('.side-panel');
