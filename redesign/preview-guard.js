@@ -234,13 +234,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const panel = document.querySelector('.side-panel');
   const open = panel?.querySelector('.side-panel__button-open');
   const close = panel?.querySelector('.side-panel__button-close');
+  const mask = panel?.querySelector('.side-panel__mask');
   const content = panel?.querySelector('.side-panel__content');
-  if (!open || !close || !content) return;
+  if (!open || !close || !mask || !content) return;
 
+  const compactMenu = matchMedia('(width < 992px)');
   open.setAttribute('aria-controls', content.id);
+  open.setAttribute('aria-expanded', 'false');
+  mask.setAttribute('aria-hidden', 'true');
   content.setAttribute('role', 'dialog');
   content.setAttribute('aria-modal', 'true');
   content.setAttribute('aria-label', 'Меню сайта');
+  content.setAttribute('aria-hidden', 'true');
   content.inert = true;
   for (const [button, label] of [[open, 'Открыть меню'], [close, 'Закрыть меню']]) {
     button.setAttribute('role', 'button');
@@ -255,13 +260,28 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function showMenu(visible) {
+    if (visible === panel.classList.contains('jkht-menu-open')) return;
+    if (visible && !compactMenu.matches) return;
+
+    const hadScrollbar = visible && window.innerWidth > document.documentElement.clientWidth;
+    panel.classList.toggle('jkht-menu-had-scrollbar', hadScrollbar);
     panel.classList.toggle('jkht-menu-open', visible);
     open.setAttribute('aria-expanded', String(visible));
-    content.inert = !visible;
-    (visible ? close : open).focus();
+    if (visible) {
+      content.inert = false;
+      content.setAttribute('aria-hidden', 'false');
+      close.focus({ preventScroll: true });
+    } else {
+      const returnTarget = compactMenu.matches ? open : document.querySelector('header .hor-menu__list > li > a');
+      returnTarget?.focus({ preventScroll: true });
+      content.inert = true;
+      content.setAttribute('aria-hidden', 'true');
+    }
   }
 
-  open.setAttribute('aria-expanded', 'false');
+  compactMenu.addEventListener('change', ({ matches }) => {
+    if (!matches) showMenu(false);
+  });
   panel.addEventListener('click', (event) => {
     if (event.target.closest('.side-panel__button-open, .side-panel__button-close, .side-panel__mask')) {
       event.preventDefault();
