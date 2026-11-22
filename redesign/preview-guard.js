@@ -190,8 +190,175 @@ function layOutMapPins(canvas) {
   }
 }
 
+function prepareParkingMap() {
+  const section = document.querySelector('.object-map:has(.object-map-selection)');
+  if (!section || section.dataset.parkingMapReady) return;
+  section.dataset.parkingMapReady = 'true';
+  const summary = section.querySelector('.object-map-selection');
+  const address = summary.querySelector('.object-map-selected-address');
+  const position = summary.querySelector('.object-map-selected-position');
+  const list = section.querySelector('.object-map-addresses ol');
+  const rows = new Map([...list.querySelectorAll('[data-map-object]')]
+    .map(row => [row.dataset.mapObject, row]));
+  const pins = new Map([...section.querySelectorAll('.object-map-pin[data-map-object]')]
+    .map(pin => [pin.dataset.mapObject, pin]));
+  let current = [];
+
+  function select(hash, focus = false) {
+    for (const link of current) {
+      link.removeAttribute('aria-current');
+      link.removeAttribute('aria-describedby');
+    }
+    current = [];
+    const row = rows.get(hash.slice(1));
+    summary.hidden = !row;
+    if (!row) return;
+
+    const link = row.querySelector('a');
+    const pin = pins.get(row.dataset.mapObject);
+    current = pin ? [link, pin] : [link];
+    for (const selected of current) {
+      selected.setAttribute('aria-current', 'true');
+      if (!pin) selected.setAttribute('aria-describedby', position.id);
+    }
+    address.textContent = link.textContent;
+    position.textContent = pin ? `Метка ${pin.textContent} на карте` : 'Точные координаты уточняются';
+    list.scrollTop += row.getBoundingClientRect().top - list.getBoundingClientRect().top
+      - (list.clientHeight - row.offsetHeight) / 2;
+    if (focus) {
+      const target = pin || link;
+      const scrollTarget = pin ? section : target;
+      scrollTarget.scrollIntoView({ block: pin ? 'start' : 'center' });
+      const { top, bottom } = target.getBoundingClientRect();
+      if (pin && (top < 0 || bottom > innerHeight)) {
+        target.scrollIntoView({ block: 'nearest' });
+      }
+      target.focus({ preventScroll: true });
+    }
+  }
+
+  function follow(event) {
+    const link = event.target.closest('.parking-card-map, .parking-viewer-map');
+    if (!link || event.defaultPrevented || event.button !== 0 ||
+        event.ctrlKey || event.metaKey || event.altKey || event.shiftKey ||
+        !rows.has(link.hash.slice(1))) return;
+    event.preventDefault();
+    const dialog = link.closest('dialog[open]');
+    const hash = link.hash;
+    function reveal() {
+      if (location.hash !== hash) history.pushState(null, '', hash);
+      select(hash, true);
+    }
+    if (dialog) {
+      dialog.addEventListener('close', reveal, { once: true });
+      dialog.close();
+    } else {
+      reveal();
+    }
+  }
+
+  document.addEventListener('click', follow);
+  window.addEventListener('hashchange', () => select(location.hash));
+  select(location.hash);
+}
+
+function prepareParkingViewer() {
+  const dialog = document.querySelector('#parking-photo-viewer');
+  if (!dialog || !dialog.showModal || dialog.dataset.ready) return;
+  dialog.dataset.ready = 'true';
+  const photos = [...document.querySelectorAll('.parking-photo')];
+  const close = dialog.querySelector('.parking-viewer-close');
+  const previous = dialog.querySelector('.parking-viewer-previous');
+  const next = dialog.querySelector('.parking-viewer-next');
+  const caption = dialog.querySelector('.parking-viewer-caption');
+  const count = dialog.querySelector('.parking-viewer-count');
+  const map = dialog.querySelector('.parking-viewer-map');
+  const stage = dialog.querySelector('.parking-viewer-stage');
+  const error = dialog.querySelector('.parking-viewer-error');
+  let index = 0;
+  let opener = null;
+  let pressedBackdrop = false;
+
+  function reserveScrollbar() {
+    if (dialog.open) return;
+    const root = document.documentElement;
+    const hasScrollbar = innerWidth > root.clientWidth && root.scrollHeight > root.clientHeight;
+    dialog.classList.toggle('parking-viewer--had-scrollbar', hasScrollbar);
+  }
+  reserveScrollbar();
+  window.addEventListener('resize', reserveScrollbar);
+
+  function showPhoto(number) {
+    index = (number + photos.length) % photos.length;
+    const photo = photos[index];
+    const label = photo.dataset.photoCaption;
+    caption.textContent = label;
+    count.textContent = `${index + 1} из ${photos.length}`;
+    map.hidden = !photo.dataset.photoMap;
+    if (map.hidden) {
+      map.removeAttribute('href');
+    } else {
+      map.href = `#${photo.dataset.photoMap}`;
+      map.setAttribute('aria-label', `На карте: ${label}`);
+    }
+
+    const thumbnail = photo.querySelector('img');
+    const image = new Image();
+    image.alt = '';
+    image.decoding = 'async';
+    image.addEventListener('error', () => {
+      if (image.parentElement !== stage) return;
+      image.remove();
+      error.textContent = 'Не удалось загрузить фото.';
+    }, { once: true });
+    error.textContent = '';
+    stage.querySelector('img')?.remove();
+    stage.append(image);
+    image.src = thumbnail.currentSrc || thumbnail.src;
+  }
+
+  for (const [number, photo] of photos.entries()) {
+    photo.setAttribute('aria-haspopup', 'dialog');
+    photo.setAttribute('aria-controls', dialog.id);
+    photo.addEventListener('click', event => {
+      if (event.button !== 0 || event.ctrlKey || event.metaKey || event.altKey || event.shiftKey) return;
+      event.preventDefault();
+      opener = photo;
+      reserveScrollbar();
+      showPhoto(number);
+      dialog.showModal();
+    });
+  }
+  close.addEventListener('click', () => dialog.close());
+  previous.addEventListener('click', () => showPhoto(index - 1));
+  next.addEventListener('click', () => showPhoto(index + 1));
+  dialog.addEventListener('keydown', event => {
+    if (event.ctrlKey || event.metaKey || event.altKey || !['ArrowLeft', 'ArrowRight'].includes(event.key)) return;
+    event.preventDefault();
+    showPhoto(index + (event.key === 'ArrowRight' ? 1 : -1));
+  });
+  function hitsBackdrop(event) {
+    const { left, right, top, bottom } = dialog.getBoundingClientRect();
+    return event.target === dialog &&
+      (event.clientX < left || event.clientX > right || event.clientY < top || event.clientY > bottom);
+  }
+  dialog.addEventListener('pointerdown', event => { pressedBackdrop = hitsBackdrop(event); });
+  dialog.addEventListener('click', event => {
+    if (pressedBackdrop && hitsBackdrop(event)) dialog.close();
+    pressedBackdrop = false;
+  });
+  dialog.addEventListener('close', () => {
+    stage.querySelector('img')?.remove();
+    opener?.focus({ preventScroll: true });
+    opener = null;
+    pressedBackdrop = false;
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   preparePreviewForms();
+  prepareParkingMap();
+  prepareParkingViewer();
 
   for (const submenu of document.querySelectorAll('.hor-menu__list .hor-menu__sub_list')) {
     const item = submenu.parentElement;

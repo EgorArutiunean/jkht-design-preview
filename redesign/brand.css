@@ -1064,6 +1064,144 @@ body.jkht-preview {
 .object-map-note { margin: 12px 0 0; color: var(--jkht-muted); font-size: 13px; }
 .object-map-more { display: inline-block; margin-top: 12px; font-weight: 750; }
 
+/* Parking galleries and selection of a catalog address on the map. */
+.jkht-preview .parking-photo {
+  position: relative;
+  display: block;
+  cursor: zoom-in;
+}
+.jkht-home .home-objects .parking-photo { height: 100%; }
+.jkht-objects .parking-photo { width: 100%; aspect-ratio: 4 / 3; }
+.jkht-preview .parking-photo:focus-visible {
+  outline: 3px solid var(--jkht-accent);
+  outline-offset: -4px;
+}
+.jkht-preview .parking-photo-badge {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  display: grid;
+  place-items: center;
+  padding: 9px;
+  border-radius: var(--jkht-control-radius);
+  background: var(--jkht-dark);
+  color: white;
+  pointer-events: none;
+}
+@media (hover: hover) {
+  .jkht-preview .parking-photo:hover .parking-photo-badge {
+    background: var(--jkht-accent);
+    color: var(--jkht-dark);
+  }
+}
+.jkht-preview .parking-card-map {
+  margin-top: 4px;
+  padding-inline: 8px !important;
+}
+.jkht-preview .parking-card-map .jkht-icon path { fill: none; }
+.jkht-preview .parking-viewer {
+  box-sizing: border-box;
+  position: fixed;
+  inset: 0;
+  width: min(980px, calc(100% - 24px));
+  max-width: none;
+  max-height: calc(100vh - 24px);
+  max-height: calc(100dvh - 24px);
+  margin: auto;
+  padding: clamp(8px, 1.5vw, 16px);
+  overflow: auto;
+  overscroll-behavior: contain;
+  border: 1px solid var(--jkht-border);
+  border-radius: var(--jkht-card-radius);
+  background: var(--jkht-paper);
+  color: var(--jkht-dark);
+}
+.jkht-preview .parking-viewer::backdrop { background: #15251ee8; }
+html:has(.parking-viewer[open]) { overflow: hidden; }
+html:has(.parking-viewer.parking-viewer--had-scrollbar) { scrollbar-gutter: stable; }
+html:has(.parking-viewer[open].parking-viewer--had-scrollbar) {
+  background: #26352d;
+}
+.parking-viewer-header,
+.parking-viewer-actions,
+.parking-viewer-status {
+  display: flex;
+  align-items: center;
+  gap: var(--jkht-space-2);
+}
+.parking-viewer-header { justify-content: space-between; margin-bottom: 8px; }
+.parking-viewer-status {
+  flex-wrap: wrap;
+  gap: 2px 10px;
+  margin: 0;
+  font: 750 clamp(14px, 1.65vw, 19px)/1.35 var(--jkht-body);
+}
+.parking-viewer-count {
+  color: var(--jkht-muted);
+  font: 650 13px/1.4 var(--jkht-body);
+  white-space: nowrap;
+}
+.parking-viewer-stage {
+  position: relative;
+  display: grid;
+  height: min(650px, 104vw, max(100px, calc(100vh - 190px)));
+  height: min(650px, 104vw, max(100px, calc(100dvh - 190px)));
+  place-items: center;
+  overflow: hidden;
+  border-radius: var(--jkht-control-radius);
+  background: var(--jkht-dark);
+}
+.jkht-preview .parking-viewer-stage img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  object-fit: contain;
+}
+.parking-viewer-error {
+  position: absolute;
+  padding: 12px;
+  color: white;
+  text-align: center;
+}
+.parking-viewer-actions { margin-top: 8px; }
+.jkht-preview .parking-viewer-close,
+.jkht-preview .parking-viewer-actions .jkht-button--icon { flex-shrink: 0; }
+.jkht-preview .parking-viewer-map { margin-left: auto; }
+.jkht-preview .parking-viewer-map[hidden] { display: none !important; }
+.object-map-selection {
+  margin-bottom: 12px;
+  padding: 8px 12px;
+  border-left: 4px solid var(--jkht-forest);
+  border-radius: 0 var(--jkht-control-radius) var(--jkht-control-radius) 0;
+  background: var(--jkht-surface);
+}
+.object-map-selected-address {
+  margin: 0;
+  color: var(--jkht-dark);
+  font-weight: 750;
+}
+.object-map-selected-position,
+.object-map-row-note {
+  margin: 0;
+  color: var(--jkht-muted);
+  font-size: 13px;
+}
+.object-map-row-note { display: none; }
+.object-map-addresses a[aria-current] + .object-map-row-note { display: block; }
+.object-map-addresses li:is(:target, :has(> [aria-current])) {
+  background: var(--jkht-accent);
+  border-left: 3px solid var(--jkht-forest);
+  font-weight: 750;
+}
+.object-map-pin[aria-current] {
+  z-index: 2;
+  outline: 2px solid var(--jkht-dark);
+  outline-offset: 1px;
+  background: var(--jkht-accent);
+  color: var(--jkht-dark) !important;
+}
+
 /* Interior pages share the spacing, type and surfaces of the homepage. */
 .jkht-inner #igzw04dt3_0 { margin: 0 !important; background: var(--jkht-paper) !important; }
 .jkht-inner #iepzl0idl_0 {
@@ -1227,10 +1365,11 @@ body.jkht-preview {
 }
 .jkht-objects #idop7j2uv_0 .lpc-gallery-6__photo { order: -1; }
 .jkht-objects #idop7j2uv_0 .lpc-gallery-6__photo-in {
+  position: absolute;
+  inset: 0;
   display: block;
   width: 100%;
-  height: auto;
-  aspect-ratio: 4 / 3;
+  height: 100%;
   object-fit: cover;
   border-radius: 0;
 }
