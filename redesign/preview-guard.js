@@ -197,7 +197,7 @@ function prepareParkingMap() {
   const summary = section.querySelector('.object-map-selection');
   const address = summary.querySelector('.object-map-selected-address');
   const position = summary.querySelector('.object-map-selected-position');
-  const list = section.querySelector('.object-map-addresses ol');
+  const list = section.querySelector('.object-map-address-list');
   const rows = new Map([...list.querySelectorAll('[data-map-object]')]
     .map(row => [row.dataset.mapObject, row]));
   const pins = new Map([...section.querySelectorAll('.object-map-pin[data-map-object]')]
@@ -221,7 +221,7 @@ function prepareParkingMap() {
       selected.setAttribute('aria-current', 'true');
       if (!pin) selected.setAttribute('aria-describedby', position.id);
     }
-    address.textContent = link.textContent;
+    address.textContent = link.getAttribute('aria-label');
     position.textContent = pin ? `Метка ${pin.textContent} на карте` : 'Точные координаты уточняются';
     list.scrollTop += row.getBoundingClientRect().top - list.getBoundingClientRect().top
       - (list.clientHeight - row.offsetHeight) / 2;

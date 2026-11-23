@@ -1048,17 +1048,36 @@ body.jkht-preview {
   padding: clamp(16px, 3vw, 30px);
 }
 .object-map-addresses h3 { margin: 0 0 10px; color: var(--jkht-dark); font-size: 18px; }
-.object-map-addresses ol {
+.object-map-address-list {
   height: 0;
   min-height: 100%;
-  margin: 0;
-  padding: 0 0 0 2em;
   overflow: auto;
   color: var(--jkht-muted);
   scrollbar-gutter: stable;
 }
-.object-map-addresses li { padding: 8px 0 8px 4px; border-bottom: 1px solid var(--jkht-border); font-size: 13px; }
+.object-map-city {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 0;
+  padding: 8px 12px;
+  border-radius: var(--jkht-control-radius);
+  background: var(--jkht-paper);
+  color: var(--jkht-dark);
+  font-size: 15px;
+  font-weight: 750;
+}
+.object-map-city span { color: var(--jkht-muted); font-size: 13px; }
+.object-map-address-list ol { margin: 0; padding: 0 5px 0 2em; }
+.object-map-address-list ol + .object-map-city { margin-top: 12px; }
+.object-map-addresses li { border-bottom: 1px solid var(--jkht-border); font-size: 13px; }
 .object-map-addresses li::marker { font-weight: 750; color: var(--jkht-forest); }
+.object-map-address-list li > a {
+  display: block;
+  box-sizing: border-box;
+  min-height: var(--jkht-touch-size);
+  padding: 11px 4px;
+}
 .object-map-addresses a,
 .object-map-more { color: var(--jkht-forest); text-underline-offset: 3px; }
 .object-map-note { margin: 12px 0 0; color: var(--jkht-muted); font-size: 13px; }
@@ -1187,7 +1206,7 @@ html:has(.parking-viewer[open].parking-viewer--had-scrollbar) {
   color: var(--jkht-muted);
   font-size: 13px;
 }
-.object-map-row-note { display: none; }
+.object-map-row-note { display: none; padding: 0 4px 8px; }
 .object-map-addresses a[aria-current] + .object-map-row-note { display: block; }
 .object-map-addresses li:is(:target, :has(> [aria-current])) {
   background: var(--jkht-accent);
@@ -1535,7 +1554,7 @@ html:has(.parking-viewer[open].parking-viewer--had-scrollbar) {
   .home-partner-copy { padding-top: 0; }
   .objects-intro .jkht-action { justify-self: start; }
   .object-map-layout { grid-template-columns: minmax(0, 1fr); }
-  .object-map-addresses ol { height: min(250px, 42vh); min-height: 0; }
+  .object-map-address-list { height: min(250px, 42vh); min-height: 0; }
   .object-map-pin { width: 20px; height: 20px; font-size: 9px; }
   .jkht-home #i3aiqbslg_0:not(.slick-slider) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
