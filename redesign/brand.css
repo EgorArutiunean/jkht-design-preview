@@ -1051,25 +1051,19 @@ body.jkht-preview {
 .object-map-address-list {
   height: 0;
   min-height: 100%;
+  margin: 0;
+  padding: 0 5px 0 2em;
   overflow: auto;
   color: var(--jkht-muted);
   scrollbar-gutter: stable;
 }
-.object-map-city {
-  display: flex;
-  justify-content: space-between;
-  gap: 8px;
-  margin: 0;
-  padding: 8px 12px;
-  border-radius: var(--jkht-control-radius);
-  background: var(--jkht-paper);
-  color: var(--jkht-dark);
-  font-size: 15px;
-  font-weight: 750;
+.object-map-city-label {
+  display: inline-block;
+  margin-inline-start: 4px;
+  color: var(--jkht-muted);
+  font-size: 12px;
+  font-weight: 650;
 }
-.object-map-city span { color: var(--jkht-muted); font-size: 13px; }
-.object-map-address-list ol { margin: 0; padding: 0 5px 0 2em; }
-.object-map-address-list ol + .object-map-city { margin-top: 12px; }
 .object-map-addresses li { border-bottom: 1px solid var(--jkht-border); font-size: 13px; }
 .object-map-addresses li::marker { font-weight: 750; color: var(--jkht-forest); }
 .object-map-address-list li > a {
