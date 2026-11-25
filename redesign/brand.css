@@ -1639,15 +1639,15 @@ html:has(.parking-viewer[open].parking-viewer--had-scrollbar) {
   .about-details { grid-template-columns: minmax(0, 1fr) auto; }
 }
 
-.financial-reports { --financial-reports-width: 54rem; }
-.financial-reports > .jkht-breadcrumbs,
-.jkht-inner .financial-reports > :is(#infeyru1c_0, #idop7j2uv_0) {
+:is(.financial-reports, .contacts-page) { --compact-page-width: 54rem; }
+:is(.financial-reports, .contacts-page) > .jkht-breadcrumbs,
+.jkht-inner :is(.financial-reports, .contacts-page) > :is(#infeyru1c_0, #idop7j2uv_0) {
   box-sizing: border-box;
   width: 100%;
-  max-width: var(--financial-reports-width);
+  max-width: var(--compact-page-width);
   margin-inline: auto !important;
 }
-.jkht-inner .financial-reports > #infeyru1c_0 {
+.jkht-inner :is(.financial-reports, .contacts-page) > #infeyru1c_0 {
   margin-block: 0 clamp(16px, 2.3vw, 28px) !important;
   padding: clamp(18px, 3vw, 36px);
   border-top: 4px solid var(--jkht-accent);
@@ -1710,6 +1710,61 @@ html:has(.parking-viewer[open].parking-viewer--had-scrollbar) {
 .financial-document:is(:focus-visible, :active) .financial-document-action { background: var(--jkht-accent); }
 @media (min-width: 600px) {
   .jkht-inner #idop7j2uv_0 a.financial-document { grid-template-columns: auto minmax(0, 1fr); }
+}
+
+.jkht-inner .contacts-page > #idop7j2uv_0.jkht-card {
+  padding: 0 !important;
+  border: 0;
+  background: transparent !important;
+}
+.contact-methods {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--jkht-space-4);
+}
+.jkht-inner #idop7j2uv_0 a.contact-method {
+  --jkht-card-padding: clamp(16px, 2.6vw, 28px);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  align-content: start;
+  gap: var(--jkht-space-3);
+  min-height: var(--jkht-touch-size);
+  text-decoration: none;
+}
+.contact-method-icon {
+  display: grid;
+  place-items: center;
+  width: var(--jkht-touch-size);
+  height: var(--jkht-touch-size);
+  border-radius: var(--jkht-control-radius);
+  background: var(--jkht-accent);
+  color: var(--jkht-dark);
+}
+.contact-method-copy { display: grid; gap: 4px; }
+.contact-method-label { color: var(--jkht-muted); font: 700 16px/1.4 var(--jkht-body); }
+.contact-method-value {
+  color: var(--jkht-forest);
+  font: 760 clamp(17px, 2vw, 23px)/1.35 var(--jkht-body);
+  text-decoration: underline;
+  text-decoration-color: var(--jkht-control-border);
+  text-underline-offset: 3px;
+  white-space: nowrap;
+}
+.contact-method-hours {
+  display: flex;
+  grid-column: 1 / -1;
+  align-items: flex-start;
+  gap: var(--jkht-space-2);
+  padding-top: var(--jkht-space-3);
+  border-top: 1px solid var(--jkht-border);
+  color: var(--jkht-muted);
+  font: 560 16px/1.5 var(--jkht-body);
+}
+.contact-method-hours .jkht-icon { flex: 0 0 auto; margin-top: 2px; }
+.contact-method-weekdays { white-space: nowrap; }
+@media (min-width: 680px) {
+  .contact-methods { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 /* Forms share the typography, surfaces and control states of the consultation dialog. */
