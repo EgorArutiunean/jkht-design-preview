@@ -1487,6 +1487,78 @@ html:has(.parking-viewer[open].parking-viewer--had-scrollbar) {
   text-decoration: underline;
   text-decoration-thickness: 1px;
 }
+
+.news-article { --news-article-width: 54rem; }
+.news-article > :is(.jkht-breadcrumbs, .news-article-header) {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: var(--news-article-width);
+  margin-inline: auto;
+}
+.news-article .jkht-breadcrumbs__list,
+.news-article .jkht-breadcrumbs__list > li:has(> a) { align-items: center; }
+.news-article .jkht-breadcrumbs a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--jkht-touch-size);
+  min-width: var(--jkht-touch-size);
+}
+.news-article li:has(> a) > .jkht-breadcrumbs__separator { align-self: center; margin: 0; }
+.news-article-header {
+  display: grid;
+  justify-items: start;
+  gap: var(--jkht-space-3);
+  margin-block-end: clamp(16px, 2.5vw, 30px);
+  padding: clamp(18px, 4vw, 44px);
+  border-top: 4px solid var(--jkht-accent);
+  border-radius: var(--jkht-card-radius);
+  background: var(--jkht-dark);
+}
+.jkht-inner .news-article-header #infeyru1c_0 {
+  margin: 0 !important;
+  color: var(--jkht-paper) !important;
+  font-size: clamp(22px, 3.6vw, 42px) !important;
+  line-height: 1.24 !important;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+.jkht-inner .news-article #idop7j2uv_0.news-article-body {
+  --jkht-card-padding: clamp(16px, 3.8vw, 42px);
+  max-width: var(--news-article-width);
+  margin-inline: auto !important;
+  font-size: clamp(16px, 1.35vw, 18px);
+  line-height: 1.7;
+}
+.news-article-body article > *:first-child { margin-block-start: 0; }
+.news-article-body article > *:last-child { margin-block-end: 0; }
+.news-article-body article > p:first-child {
+  color: var(--jkht-dark);
+  font-weight: 650;
+}
+.news-article-body article > h2 { margin-block: 1.3em .45em; }
+.news-article-body li { margin-block-end: .6em; }
+.news-article-body li::marker { color: var(--jkht-forest); }
+.jkht-inner #idop7j2uv_0 a.news-article-document {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--jkht-space-3);
+  width: fit-content;
+  max-width: 100%;
+  min-height: var(--jkht-touch-size);
+  padding: 12px;
+  border: 1px solid var(--jkht-border);
+  border-radius: var(--jkht-control-radius);
+  background: var(--jkht-surface);
+  font-weight: 730;
+  text-decoration: none;
+}
+.news-article-document > .jkht-icon { flex: 0 0 auto; }
+@media (hover: hover) {
+  .jkht-inner #idop7j2uv_0 a.news-article-document:hover { border-color: var(--jkht-control-border); }
+}
+.jkht-inner #idop7j2uv_0 a.news-article-document:active { background: #dfe8db; }
+
 /* Forms share the typography, surfaces and control states of the consultation dialog. */
 .jkht-preview form.jkht-form {
   box-sizing: border-box;
