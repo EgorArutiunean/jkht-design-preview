@@ -1639,6 +1639,79 @@ html:has(.parking-viewer[open].parking-viewer--had-scrollbar) {
   .about-details { grid-template-columns: minmax(0, 1fr) auto; }
 }
 
+.financial-reports { --financial-reports-width: 54rem; }
+.financial-reports > .jkht-breadcrumbs,
+.jkht-inner .financial-reports > :is(#infeyru1c_0, #idop7j2uv_0) {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: var(--financial-reports-width);
+  margin-inline: auto !important;
+}
+.jkht-inner .financial-reports > #infeyru1c_0 {
+  margin-block: 0 clamp(16px, 2.3vw, 28px) !important;
+  padding: clamp(18px, 3vw, 36px);
+  border-top: 4px solid var(--jkht-accent);
+  border-radius: var(--jkht-card-radius);
+  background: var(--jkht-dark);
+  color: var(--jkht-paper) !important;
+  font-size: clamp(22px, 3.2vw, 40px) !important;
+  line-height: 1.24 !important;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+.jkht-inner .financial-reports > #idop7j2uv_0.jkht-card { padding: 0 !important; }
+.jkht-inner #idop7j2uv_0 a.financial-document {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  gap: var(--jkht-space-4);
+  width: 100%;
+  min-height: var(--jkht-touch-size);
+  padding: clamp(16px, 3vw, 32px);
+  border-radius: inherit;
+  text-decoration: none;
+}
+.financial-document-icon {
+  display: grid;
+  place-items: center;
+  width: var(--jkht-touch-size);
+  height: var(--jkht-touch-size);
+  border-radius: var(--jkht-control-radius);
+  background: var(--jkht-accent);
+  color: var(--jkht-dark);
+}
+.financial-document-copy {
+  display: grid;
+  justify-items: start;
+  gap: var(--jkht-space-3);
+}
+.financial-document-title {
+  max-width: 65ch;
+  color: var(--jkht-ink);
+  font: 700 clamp(16px, 1.6vw, 20px)/1.55 var(--jkht-body);
+  overflow-wrap: normal;
+  word-break: normal;
+}
+.financial-document-registration { white-space: nowrap; }
+.financial-document-action {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--jkht-touch-size);
+  padding-inline: 12px;
+  border-radius: var(--jkht-control-radius);
+  background: var(--jkht-surface);
+  color: var(--jkht-forest);
+  font: 750 14px/1.4 var(--jkht-body);
+}
+@media (hover: hover) {
+  .financial-document:hover .financial-document-action { background: var(--jkht-accent); }
+}
+.financial-document:is(:focus-visible, :active) .financial-document-action { background: var(--jkht-accent); }
+@media (min-width: 600px) {
+  .jkht-inner #idop7j2uv_0 a.financial-document { grid-template-columns: auto minmax(0, 1fr); }
+}
+
 /* Forms share the typography, surfaces and control states of the consultation dialog. */
 .jkht-preview form.jkht-form {
   box-sizing: border-box;
