@@ -1412,8 +1412,6 @@ html:has(.parking-viewer[open].parking-viewer--had-scrollbar) {
   gap: var(--jkht-space-4);
 }
 .jkht-contacts #idop7j2uv_0 > .jkht-action { margin-top: 18px; }
-.jkht-objects #infeyru1c_0 { margin-bottom: 16px !important; }
-.jkht-objects #in28v8gxt_0 > .jkht-action { margin-bottom: 24px; }
 .jkht-objects #idop7j2uv_0 { max-width: none; }
 .jkht-objects #idop7j2uv_0 .decor-wrap {
   display: grid;
@@ -1445,7 +1443,9 @@ html:has(.parking-viewer[open].parking-viewer--had-scrollbar) {
   margin: 0 !important;
   padding: 0 !important;
 }
-.jkht-objects #idop7j2uv_0 .lpc-gallery-6__photo { order: -1; }
+.jkht-objects #idop7j2uv_0 .lpc-gallery-6__wrap { height: 100%; }
+.jkht-objects #idop7j2uv_0 .lpc-gallery-6__row { flex: 1; }
+.jkht-objects #idop7j2uv_0 .lpc-gallery-6__content { display: flex; flex: 1; }
 .jkht-objects #idop7j2uv_0 .lpc-gallery-6__photo-in {
   position: absolute;
   inset: 0;
@@ -1456,15 +1456,50 @@ html:has(.parking-viewer[open].parking-viewer--had-scrollbar) {
   border-radius: 0;
 }
 .jkht-objects #idop7j2uv_0 .lpc-gallery-6__content-in {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--jkht-space-2);
+  width: 100%;
   min-height: 0 !important;
-  padding: 14px 16px !important;
-  background: white !important;
+  padding: clamp(16px, 1.75vw, 24px) !important;
+  background: var(--jkht-paper) !important;
 }
 .jkht-objects #idop7j2uv_0 .lpc-gallery-6__title {
-  color: var(--jkht-forest) !important;
-  font: 750 clamp(15px, 1.5vw, 19px)/1.4 var(--jkht-body) !important;
+  margin: 0 !important;
+  color: var(--jkht-dark) !important;
+  font: 780 clamp(16px, 1.45vw, 20px)/1.35 var(--jkht-body) !important;
+  text-wrap: wrap;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+.jkht-preview.jkht-objects .parking-photo-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font: 750 13px/1.4 var(--jkht-body);
+}
+.jkht-preview.jkht-objects .parking-photo:focus-visible {
+  outline: 3px solid var(--jkht-accent) !important;
+  outline-offset: -4px !important;
+}
+.jkht-preview.jkht-objects .parking-card-map {
+  --jkht-button-bg: var(--jkht-surface);
+  --jkht-button-border: var(--jkht-border);
+  --jkht-button-hover: #dfe8db;
+  margin: 0;
+  padding-inline: 12px !important;
 }
 .jkht-objects #idop7j2uv_0 > p { max-width: 76ch; }
+.jkht-preview.jkht-objects #i7uf11zcb_0.object-map {
+  padding-block: clamp(32px, 5vw, 70px);
+  border-top: 1px solid var(--jkht-border);
+  background: var(--jkht-surface);
+}
+.jkht-objects .object-map-layout { background: var(--jkht-paper); }
+.jkht-objects .object-map-intro { font-size: 16px; }
+.jkht-objects .object-map-addresses li { font-size: clamp(14px, 1.1vw, 16px); }
 .preview-unavailable-document { color: var(--jkht-muted); }
 
 .jkht-inner:is(.jkht-article, .jkht-documents, .jkht-news) #idop7j2uv_0 {
@@ -1648,7 +1683,7 @@ html:has(.parking-viewer[open].parking-viewer--had-scrollbar) {
   margin-inline: auto !important;
 }
 .jkht-inner :is(.financial-reports, .contacts-page) > #infeyru1c_0,
-.reviews-header {
+:is(.reviews-header, .objects-header) {
   margin-block: 0 clamp(16px, 2.3vw, 28px) !important;
   padding: clamp(18px, 3vw, 36px);
   border-top: 4px solid var(--jkht-accent);
@@ -1656,7 +1691,7 @@ html:has(.parking-viewer[open].parking-viewer--had-scrollbar) {
   background: var(--jkht-dark);
 }
 .jkht-inner :is(.financial-reports, .contacts-page) > #infeyru1c_0,
-.jkht-inner .reviews-header #infeyru1c_0 {
+.jkht-inner :is(.reviews-header, .objects-header) #infeyru1c_0 {
   color: var(--jkht-paper) !important;
   font-size: clamp(22px, 3.2vw, 40px) !important;
   line-height: 1.24 !important;
@@ -1771,14 +1806,16 @@ html:has(.parking-viewer[open].parking-viewer--had-scrollbar) {
   .contact-methods { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
-.reviews-header {
+:is(.reviews-header, .objects-header) {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   gap: var(--jkht-space-4);
 }
-.jkht-inner .reviews-header #infeyru1c_0 { margin: 0 !important; }
+.jkht-inner :is(.reviews-header, .objects-header) #infeyru1c_0 { margin: 0 !important; }
+.objects-header { box-sizing: border-box; width: 100%; }
+.objects-header > h1 { flex: 1 1 24rem; }
 .jkht-inner .reviews-page > #idop7j2uv_0.jkht-card {
   --jkht-card-padding: clamp(16px, 3vw, 32px);
   --jkht-card-surface: var(--jkht-paper);
