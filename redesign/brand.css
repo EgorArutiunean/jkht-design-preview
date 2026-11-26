@@ -1639,20 +1639,24 @@ html:has(.parking-viewer[open].parking-viewer--had-scrollbar) {
   .about-details { grid-template-columns: minmax(0, 1fr) auto; }
 }
 
-:is(.financial-reports, .contacts-page) { --compact-page-width: 54rem; }
-:is(.financial-reports, .contacts-page) > .jkht-breadcrumbs,
-.jkht-inner :is(.financial-reports, .contacts-page) > :is(#infeyru1c_0, #idop7j2uv_0) {
+:is(.financial-reports, .contacts-page, .reviews-page) { --compact-page-width: 54rem; }
+:is(.financial-reports, .contacts-page, .reviews-page) > .jkht-breadcrumbs,
+.jkht-inner :is(.financial-reports, .contacts-page, .reviews-page) > :is(#infeyru1c_0, #idop7j2uv_0, .reviews-header) {
   box-sizing: border-box;
   width: 100%;
   max-width: var(--compact-page-width);
   margin-inline: auto !important;
 }
-.jkht-inner :is(.financial-reports, .contacts-page) > #infeyru1c_0 {
+.jkht-inner :is(.financial-reports, .contacts-page) > #infeyru1c_0,
+.reviews-header {
   margin-block: 0 clamp(16px, 2.3vw, 28px) !important;
   padding: clamp(18px, 3vw, 36px);
   border-top: 4px solid var(--jkht-accent);
   border-radius: var(--jkht-card-radius);
   background: var(--jkht-dark);
+}
+.jkht-inner :is(.financial-reports, .contacts-page) > #infeyru1c_0,
+.jkht-inner .reviews-header #infeyru1c_0 {
   color: var(--jkht-paper) !important;
   font-size: clamp(22px, 3.2vw, 40px) !important;
   line-height: 1.24 !important;
@@ -1765,6 +1769,41 @@ html:has(.parking-viewer[open].parking-viewer--had-scrollbar) {
 .contact-method-weekdays { white-space: nowrap; }
 @media (min-width: 680px) {
   .contact-methods { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.reviews-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--jkht-space-4);
+}
+.jkht-inner .reviews-header #infeyru1c_0 { margin: 0 !important; }
+.jkht-inner .reviews-page > #idop7j2uv_0.jkht-card {
+  --jkht-card-padding: clamp(16px, 3vw, 32px);
+  --jkht-card-surface: var(--jkht-paper);
+}
+.reviews-page #g-board__form { margin: 0 0 var(--jkht-space-4); scroll-margin-top: 16px; }
+.jkht-preview .reviews-page #form_g-anketa.jkht-form {
+  max-width: none;
+  padding: 0 !important;
+  border: 0;
+}
+.reviews-page #form_g-anketa label { font-size: 16px !important; }
+.reviews-page #form_g-anketa .g-notice {
+  margin: 0 0 var(--jkht-space-4) !important;
+  padding: 10px 14px !important;
+  border: 1px solid var(--jkht-border);
+  border-inline-start: 3px solid var(--jkht-accent);
+  border-radius: var(--jkht-control-radius);
+  background: var(--jkht-surface);
+  color: var(--jkht-dark);
+  font: 600 16px/1.5 var(--jkht-body);
+}
+@media (min-width: 680px) {
+  .reviews-page #form_g-anketa { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--jkht-space-4); }
+  .reviews-page #form_g-anketa > * { grid-column: 1 / -1; }
+  .reviews-page #form_g-anketa > .g-form-field:has(:is(#post_name, #post_mail)) { grid-column: auto; }
 }
 
 /* Forms share the typography, surfaces and control states of the consultation dialog. */
