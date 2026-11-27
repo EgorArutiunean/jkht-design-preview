@@ -1674,16 +1674,16 @@ html:has(.parking-viewer[open].parking-viewer--had-scrollbar) {
   .about-details { grid-template-columns: minmax(0, 1fr) auto; }
 }
 
-:is(.financial-reports, .contacts-page, .reviews-page) { --compact-page-width: 54rem; }
-:is(.financial-reports, .contacts-page, .reviews-page) > .jkht-breadcrumbs,
-.jkht-inner :is(.financial-reports, .contacts-page, .reviews-page) > :is(#infeyru1c_0, #idop7j2uv_0, .reviews-header) {
+:is(.financial-reports, .contacts-page, .reviews-page, .online-payment-page) { --compact-page-width: 54rem; }
+:is(.financial-reports, .contacts-page, .reviews-page, .online-payment-page) > .jkht-breadcrumbs,
+.jkht-inner :is(.financial-reports, .contacts-page, .reviews-page, .online-payment-page) > :is(#infeyru1c_0, #idop7j2uv_0, .reviews-header, .online-payment-header) {
   box-sizing: border-box;
   width: 100%;
   max-width: var(--compact-page-width);
   margin-inline: auto !important;
 }
 .jkht-inner :is(.financial-reports, .contacts-page) > #infeyru1c_0,
-:is(.reviews-header, .objects-header) {
+:is(.reviews-header, .objects-header, .online-payment-header) {
   margin-block: 0 clamp(16px, 2.3vw, 28px) !important;
   padding: clamp(18px, 3vw, 36px);
   border-top: 4px solid var(--jkht-accent);
@@ -1691,7 +1691,7 @@ html:has(.parking-viewer[open].parking-viewer--had-scrollbar) {
   background: var(--jkht-dark);
 }
 .jkht-inner :is(.financial-reports, .contacts-page) > #infeyru1c_0,
-.jkht-inner :is(.reviews-header, .objects-header) #infeyru1c_0 {
+.jkht-inner :is(.reviews-header, .objects-header, .online-payment-header) #infeyru1c_0 {
   color: var(--jkht-paper) !important;
   font-size: clamp(22px, 3.2vw, 40px) !important;
   line-height: 1.24 !important;
@@ -1806,14 +1806,14 @@ html:has(.parking-viewer[open].parking-viewer--had-scrollbar) {
   .contact-methods { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
-:is(.reviews-header, .objects-header) {
+:is(.reviews-header, .objects-header, .online-payment-header) {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   gap: var(--jkht-space-4);
 }
-.jkht-inner :is(.reviews-header, .objects-header) #infeyru1c_0 { margin: 0 !important; }
+.jkht-inner :is(.reviews-header, .objects-header, .online-payment-header) #infeyru1c_0 { margin: 0 !important; }
 .objects-header { box-sizing: border-box; width: 100%; }
 .objects-header > h1 { flex: 1 1 24rem; }
 .jkht-inner .reviews-page > #idop7j2uv_0.jkht-card {
@@ -1946,6 +1946,30 @@ html:has(.parking-viewer[open].parking-viewer--had-scrollbar) {
 .jkht-payment #TinkoffPayForm .form-row > .form-group { padding-inline: 0; }
 .jkht-payment #TinkoffPayForm .row.text-left { padding-inline: 0 !important; }
 .jkht-payment #TinkoffPayForm .form-group:empty { display: none; }
+
+.online-payment-header > h1 { flex: 1 1 22rem; }
+.jkht-inner .online-payment-page #idop7j2uv_0 > .jkht-preview-notice {
+  border-inline-start: 3px solid var(--jkht-accent);
+  font: 650 16px/1.5 var(--jkht-body);
+}
+.jkht-preview .online-payment-page #TinkoffPayForm.jkht-form { max-width: none; }
+.online-payment-page #TinkoffPayForm > .form-row { min-width: 0; }
+.online-payment-page #TinkoffPayForm > .form-row > .form-group {
+  box-sizing: border-box;
+  flex: 0 0 100%;
+  width: 100%;
+  max-width: 100%;
+}
+.online-payment-page #TinkoffPayForm label,
+.online-payment-page #TinkoffPayForm .jkht-field-hint { font-size: 16px !important; }
+@media (min-width: 700px) {
+  .online-payment-page #TinkoffPayForm {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--jkht-space-4);
+  }
+  .online-payment-page #TinkoffPayForm > .form-row:has(#oplata) { grid-column: 1 / -1; }
+}
 
 
 .preview-catalog { padding-block: clamp(40px, 8vw, 96px); }
